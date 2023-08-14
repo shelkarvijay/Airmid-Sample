@@ -1,0 +1,3 @@
+<div *ngIf="docType=='image'">image-view works!</div>
+<img *ngIf="docType=='image'" [src]="docData" height="800" width="800" class="view-image"> <br/>
+<object [data]="docData" *ngIf="docType=='pdf' || docType=='xls'" [type]="docViewType" width="100%" height="600px"></object>
