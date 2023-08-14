@@ -12,6 +12,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ImageViewComponent } from './image-view/image-view.component';
 import { SafePipesPipe } from './safe-pipe';
+import { WebcamModule } from 'ngx-webcam';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SafePipesPipe } from './safe-pipe';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
+    WebcamModule
   ],
   providers: [SafePipesPipe],
   bootstrap: [AppComponent]

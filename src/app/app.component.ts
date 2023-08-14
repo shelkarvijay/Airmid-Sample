@@ -15,7 +15,6 @@ export class DocData {
 })
 export class AppComponent {
   title = 'file-upload';
-
   images: string[] = [];
   docsArray: DocData[] = [];
   @ViewChild('attachments') attachment: any;
@@ -28,7 +27,7 @@ export class AppComponent {
     docFile: new FormControl('', [Validators.required]),
     docFileSource: new FormControl('', [Validators.required])
   });
-
+  showOptions: boolean = false;
   constructor(
     public matDialog: MatDialog
   ) { }
@@ -111,5 +110,24 @@ export class AppComponent {
 
   onSubmitDocFiles() {
     console.log(this.docsForm.get('docFileSource')?.value);
+  }
+
+  openCamera(type: string) {
+    let fileType;
+    const dialogRef = this.matDialog.open(ImageViewComponent,
+      {
+        width: '900px',
+        height: '900px',
+        data: {
+          docData: type == 'camera' ? 'camera' : '',
+          type: type == 'camera' ? 'camera' : ''
+        }
+      }
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.images.push(result.url);
+      }
+    });
   }
 }

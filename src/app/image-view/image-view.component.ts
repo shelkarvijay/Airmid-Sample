@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SafePipesPipe } from '../safe-pipe';
+import { Observable, Subject } from 'rxjs';
+import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 
 @Component({
   selector: 'app-image-view',
@@ -14,6 +16,12 @@ export class ImageViewComponent implements OnInit {
   docType;
   docViewType: any;
   sStatus: any = '';
+  public errors: WebcamInitError[] = [];
+
+  private trigger: Subject<any> = new Subject();
+  public webcamImage!: WebcamImage;
+  private nextWebcam: Subject<any> = new Subject();
+  sysImage = '';
   constructor(
     public dialogRef: MatDialogRef<ImageViewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,7 +36,11 @@ export class ImageViewComponent implements OnInit {
       this.docViewType = "application/pdf";
       data.docData = data.docData.split('data:application/pdf;base64,').pop();
       this.docData = this.b64toBlob(data.docData, 'application/pdf');
+    } else  if (data.type == "camera") {
+      this.docData = data.docData;
+      this.docType = "camera";
     }
+    console.log(this.docData)
   }
 
   ngOnInit(): void {
@@ -49,6 +61,28 @@ export class ImageViewComponent implements OnInit {
     const blob = new Blob(byteArrays, { type: contentType });
     const Url = URL.createObjectURL(blob);
     return this.safe.transform(Url);
+  }
+
+  public getSnapshot(): void {
+    this.trigger.next(void 0);
+  }
+  public captureImg(webcamImage: WebcamImage): void {
+    this.webcamImage = webcamImage;
+    this.sysImage = webcamImage!.imageAsDataUrl;
+    console.info('got webcam image', this.sysImage);
+  }
+  public get invokeObservable(): Observable<any> {
+    return this.trigger.asObservable();
+  }
+  public get nextWebcamObservable(): Observable<any> {
+    return this.nextWebcam.asObservable();
+  }
+  public handleInitError(error: WebcamInitError): void {
+    this.errors.push(error);
+  }
+
+  onUpload() {
+    this.dialogRef.close({url: this.sysImage});
   }
 
 }

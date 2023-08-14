@@ -1,37 +1,42 @@
 <div>
   <form [formGroup]="imageForm">
-      <div class="upload-container">
+    <div class="upload-container">
+        <label class="file-lable" (click)="showOptions = true;">Upload Image</label>
+        <div class="upload-option-div" *ngIf="showOptions">
           <div class="img-container">
-              <input formControlName="imageFile" type="file" #attachments accept="image/*" multiple name="file"
-                  id="file" class="inputfile" (change)="onImageFileChange($event)" />
-              <label class="file-lable" for="file">Upload Image</label>
-              <div *ngFor='let url of images' class="img-div">
-                  <img [src]="url" height="100" width="100px" class="view-image" (click)="onViewImage(url, 'img')">
-                  <br />
-                  <mat-icon aria-hidden="false" style="color: red;" (click)="removeImage(url)">delete</mat-icon>
-
-              </div>
+            <input formControlName="imageFile" type="file" #attachments accept="image/*" multiple name="file" id="file"
+              class="inputfile" (change)="onImageFileChange($event)" />
+            <label class="file-lable1" for="file"><mat-icon>open_in_browser</mat-icon></label>
           </div>
-          <button style="margin-top: 20px;" class="submit-btn1" (click)="onSubmitImgFiles()">Submit</button>
-      </div>
+          <div>
+            <mat-icon (click)="openCamera('camera')">camera_enhance</mat-icon>
+          </div>
+        </div>
+        <div *ngFor='let url of images' class="img-div">
+          <img [src]="url" height="100" width="100px" class="view-image" (click)="onViewImage(url, 'img')">
+          <br />
+          <mat-icon aria-hidden="false" style="color: red;" (click)="removeImage(url)">delete</mat-icon>
+
+        </div>
+      <button style="margin-top: 20px;" class="submit-btn1" (click)="onSubmitImgFiles()">Submit</button>
+    </div>
   </form>
 </div>
 <div>
   <form [formGroup]="docsForm">
-      <div class="upload-container">
-          <div class="img-container">
-              <input formControlName="docFile" type="file"
-                  accept="application/pdf" multiple 
-                  name="docFile" id="docFile" class="inputfile" (change)="onDocFileChange($event)" />
-              <label class="file-lable" for="docFile">Upload Pdf</label>
-              <div *ngFor='let element of docsArray' class="img-div">
-                  <img src="assets/images/doc.jpg" height="50" width="100px" class="view-image"
-                      (click)="onViewImage(element, 'pdf')"> <br />
-                  <mat-icon aria-hidden="false" style="color: red;" (click)="removeDoc(element)">delete</mat-icon>
+    <div class="upload-container">
+      <div class="img-container">
+        <input formControlName="docFile" type="file" accept="application/pdf" multiple name="docFile" id="docFile"
+          class="inputfile" (change)="onDocFileChange($event)" />
+        <label class="file-lable" for="docFile">Upload Pdf</label>
+        <div *ngFor='let element of docsArray' class="img-div">
+          <img src="assets/images/doc.jpg" height="50" width="100px" class="view-image"
+            (click)="onViewImage(element, 'pdf')"> <br />
+          <mat-icon aria-hidden="false" style="color: red;" (click)="removeDoc(element)">delete</mat-icon>
 
-              </div>
-          </div>
-          <button style="margin-top: 20px;" class="submit-btn1" (click)="onSubmitDocFiles()">Submit</button>
+        </div>
       </div>
+      <button style="margin-top: 20px;" class="submit-btn1" (click)="onSubmitDocFiles()">Submit</button>
+    </div>
   </form>
 </div>
