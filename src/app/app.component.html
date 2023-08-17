@@ -12,11 +12,13 @@
             <mat-icon (click)="openCamera('camera')">camera_enhance</mat-icon>
           </div>
         </div>
-        <div *ngFor='let url of images' class="img-div">
-          <img [src]="url" height="100" width="100px" class="view-image" (click)="onViewImage(url, 'img')">
-          <br />
-          <mat-icon aria-hidden="false" style="color: red;" (click)="removeImage(url)">delete</mat-icon>
-
+        <div class="img-parent-div">
+          <div *ngFor='let element of images' class="img-div">
+              <img [src]="element.url" height="100" width="100px" class="view-image" (click)="onViewImage(element.url, 'img')">
+              <br />
+              <mat-icon aria-hidden="false" style="color: red;" (click)="removeImage(element.url)">delete</mat-icon>
+              <span>{{element.name}}</span>
+          </div>
         </div>
       <button style="margin-top: 20px;" class="submit-btn1" (click)="onSubmitImgFiles()">Submit</button>
     </div>

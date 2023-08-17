@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { ImageViewComponent } from './image-view/image-view.component';
 import { SafePipesPipe } from './safe-pipe';
 import { WebcamModule } from 'ngx-webcam';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { WebcamModule } from 'ngx-webcam';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
-    WebcamModule
+    WebcamModule,
+    HttpClientModule
   ],
   providers: [SafePipesPipe],
   bootstrap: [AppComponent]

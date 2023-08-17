@@ -6,6 +6,15 @@
 .img-div {
     position: relative;
     margin-top: 15px;
+    /* display: flex; */
+    padding: 10px;
+    // border: 2px solid grey;
+    width: 170px;
+    margin: 10px;
+}
+.img-parent-div {
+    display: flex;
+    flex-direction: row;
 }
 .img-div img {
     display: block;

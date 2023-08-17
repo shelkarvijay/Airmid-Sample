@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewComponent } from './image-view/image-view.component';
+import { ApiService } from './shared/api.service';
 
 export class DocData {
   doc: any;
@@ -15,7 +16,7 @@ export class DocData {
 })
 export class AppComponent {
   title = 'file-upload';
-  images: string[] = [];
+  images: any[] = [];
   docsArray: DocData[] = [];
   @ViewChild('attachments') attachment: any;
   imageForm = new FormGroup({
@@ -29,16 +30,19 @@ export class AppComponent {
   });
   showOptions: boolean = false;
   constructor(
-    public matDialog: MatDialog
+    public matDialog: MatDialog,
+    private apiService: ApiService
   ) { }
 
   onImageFileChange(event: any) {
+    let x: any = [];
     if (event.target.files && event.target.files[0]) {
       let filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
         var reader = new FileReader();
-        reader.onload = (event: any) => {
-          this.images.push(event.target.result);
+        x.push(event.target.files[i].name);
+        reader.onload = (eventOnLoad: any) => {
+          this.images.push({url: eventOnLoad.target.result, name: x[i]});
           this.imageForm.patchValue({
             imgFileSource: this.images
           });
@@ -106,6 +110,12 @@ export class AppComponent {
 
   onSubmitImgFiles() {
     console.log(this.imageForm.get('imgFileSource')?.value);
+    let reqJson = {};
+    this.apiService.postDataToServer('/api/CRMSTran/Save_StudyUploadDocument', reqJson).subscribe(res => {
+      if(res) {
+        
+      }
+    });
   }
 
   onSubmitDocFiles() {
